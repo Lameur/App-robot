@@ -15,6 +15,7 @@ dependencies = [
     "pyserial>=3.5",
     "python-for-android>=2024.1.21",
     "setuptools>=78.1.0",
+    "winfcntl>=1.1.9",
 ]
 
 [project.scripts]
