@@ -35,21 +35,21 @@ jobs:
       run: |
         curl -L -o mesa-dist-win64.zip https://github.com/pal1000/mesa-dist-win/releases/download/23.1.7.0/mesa-dist-win64-23.1.7.0.zip
         unzip mesa-dist-win64.zip -d mesa-dist-win64
-        setx MESA_GL_VERSION_OVERRIDE 2.0
-        setx MESA_GLSL_VERSION_OVERRIDE 110
-        setx PATH "%PATH%;%CD%\\mesa-dist-win64\\bin"
+        echo "MESA_GL_VERSION_OVERRIDE=2.0" >> $GITHUB_ENV
+        echo "MESA_GLSL_VERSION_OVERRIDE=110" >> $GITHUB_ENV
+        echo "PATH=$PWD\mesa-dist-win64\bin;$PATH" >> $GITHUB_ENV
 
     - name: Build Windows executable
       run: |
         . .venv/Scripts/activate
-        pyinstaller --onefile --name RobotControl src/app/main.py
+        pyinstaller --name RobotControl src/app/main.py
       shell: bash
 
     - name: Upload Windows executable
       uses: actions/upload-artifact@v4
       with:
         name: windows-executable
-        path: dist/RobotControl.exe
+        path: dist/RobotControl/
 
   build-linux:
     runs-on: ubuntu-latest
@@ -68,7 +68,6 @@ jobs:
           libsdl2-image-dev \
           libsdl2-mixer-dev \
           libsdl2-ttf-dev \
-          libsmpeg-dev \
           libportmidi-dev \
           libavformat-dev \
           libswscale-dev \
@@ -88,10 +87,10 @@ jobs:
       run: |
         uv sync
         . .venv/bin/activate
-        pyinstaller --onefile --name RobotControl src/app/main.py
+        pyinstaller --name RobotControl src/app/main.py
 
     - name: Upload Linux executable
       uses: actions/upload-artifact@v4
       with:
         name: linux-executable
-        path: dist/RobotControl
+        path: dist/RobotControl/

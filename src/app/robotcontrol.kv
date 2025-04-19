@@ -1,0 +1,54 @@
+<BoxLayout>:
+    orientation: 'vertical'
+    padding: 10
+    spacing: 10
+
+    TextInput:
+        id: device_input
+        text: "00:21:13:00:00:01"
+        multiline: False
+        hint_text: "Adresse Bluetooth (ex: 00:21:13:00:00:01)"
+
+    Button:
+        text: "Connecter Bluetooth"
+        on_press: app.connect_bluetooth(self)
+
+    Label:
+        id: status_label
+        text: "Non connecté"
+
+    GridLayout:
+        cols: 3
+        spacing: 5
+
+        Widget:  # Spacer
+        Button:
+            text: "Avancer"
+            on_press: app.send_command("F")
+            disabled: not app.connected
+        Widget:  # Spacer
+
+        Button:
+            text: "Gauche"
+            on_press: app.send_command("L")
+            disabled: not app.connected
+        Button:
+            text: "Arrêter"
+            on_press: app.send_command("S")
+            disabled: not app.connected
+        Button:
+            text: "Droite"
+            on_press: app.send_command("R")
+            disabled: not app.connected
+
+        Widget:  # Spacer
+        Button:
+            text: "Reculer"
+            on_press: app.send_command("B")
+            disabled: not app.connected
+        Widget:  # Spacer
+
+    Button:
+        text: "Lancer la séquence de dépose"
+        on_press: app.send_command("D")
+        disabled: not app.connected

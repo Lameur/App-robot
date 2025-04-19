@@ -25,5 +25,4 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         source .venv/bin/activate
-        pylint --fail-under=7.0 --recursive=y --enable=W $(git ls-files '*.py')
-        deactivate
+        pylint --fail-under=8.0 --recursive=y --enable=W $(git ls-files '*.py')
