@@ -4,8 +4,8 @@ version = "0.1.0"
 description = "Python app to control a Bluetooth robot"
 readme = "README.md"
 authors = [{ name = "Lameur", email = "96985489+Lameur@users.noreply.github.com" }]
-requires-python = ">=3.13"
-dependencies = ["kivy>=2.3.1", "pyserial>=3.5"]
+requires-python = ">=3.12,<3.13"
+dependencies = ["kivy>=2.3.1", "pyjnius>=1.6.1", "pyserial>=3.5"]
 
 [project.scripts]
 app = "app:main"

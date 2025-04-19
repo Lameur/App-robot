@@ -1,2 +1,3 @@
-def main() -> None:
-    print("Hello from app!")
+from .main import RobotControlApp
+
+__all__ = ["RobotControlApp"]
