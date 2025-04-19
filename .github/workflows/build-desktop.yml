@@ -11,48 +11,41 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    # Étape 1 : Cloner le dépôt
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Étape 2 : Configurer Python
     - name: Set up Python 3.12
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
-    # Étape 3 : Installer uv
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
       shell: bash
 
-    # Étape 4 : Installer les dépendances Python avec uv
     - name: Install Python dependencies
       run: |
         uv venv
         . .venv/Scripts/activate
-        uv pip install kivy pyserial pyjnius pyinstaller
+        uv sync
       shell: bash
 
     - name: Install Mesa3D for OpenGL support
       run: |
         curl -L -o mesa-dist-win64.zip https://github.com/pal1000/mesa-dist-win/releases/download/23.1.7.0/mesa-dist-win64-23.1.7.0.zip
-        tar -xf mesa-dist-win64.zip -C mesa-dist-win64 --strip-components=1
+        unzip mesa-dist-win64.zip -d mesa-dist-win64
         setx MESA_GL_VERSION_OVERRIDE 2.0
         setx MESA_GLSL_VERSION_OVERRIDE 110
         setx PATH "%PATH%;%CD%\\mesa-dist-win64\\bin"
 
-
-    # Étape 5 : Compiler l'exécutable Windows avec PyInstaller
     - name: Build Windows executable
       run: |
         . .venv/Scripts/activate
         pyinstaller --onefile --name RobotControl src/app/main.py
       shell: bash
 
-    # Étape 6 : Téléverser l'exécutable Windows
     - name: Upload Windows executable
       uses: actions/upload-artifact@v4
       with:
@@ -63,11 +56,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Étape 1 : Cloner le dépôt
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Étape 2 : Installer les dépendances système pour Kivy sur Linux
     - name: Install system dependencies
       run: |
         sudo apt-get update
@@ -84,32 +75,23 @@ jobs:
           libswscale-dev \
           zlib1g-dev
 
-    # Étape 3 : Configurer Python
     - name: Set up Python 3.12
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
 
-    # Étape 4 : Installer uv
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-    # Étape 5 : Installer les dépendances Python avec uv
-    - name: Install Python dependencies
+    - name: Build Linux executable
       run: |
         uv venv
         . .venv/bin/activate
-        uv pip install kivy pyserial pyjnius pyinstaller
-
-    # Étape 6 : Compiler l'exécutable Linux avec PyInstaller
-    - name: Build Linux executable
-      run: |
-        . .venv/bin/activate
+        uv sync
         pyinstaller --onefile --name RobotControl src/app/main.py
 
-    # Étape 7 : Téléverser l'exécutable Linux
     - name: Upload Linux executable
       uses: actions/upload-artifact@v4
       with:

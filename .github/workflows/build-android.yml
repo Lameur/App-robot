@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Android APK and AAB
 
 on:
   push:
@@ -11,18 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Étape 1 : Cloner le dépôt
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # Étape 2 : Configurer Java (nécessaire pour l'Android SDK)
     - name: Set up JDK 24
       uses: actions/setup-java@v4
       with:
         java-version: '24'
         distribution: 'zulu'
 
-    # Étape 3 : Installer les dépendances système
     - name: Install system dependencies
       run: |
         sudo apt-get update
@@ -51,28 +48,25 @@ jobs:
         echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
         yes | android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "build-tools;36.0.0" "platforms;android-34" "ndk;23.1.7779620" "platform-tools"
 
-    # Étape 5 : Installer uv
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-    # Étape 6 : Installer les dépendances Python avec uv
     - name: Install Python dependencies
       run: |
         uv venv --python 3.12
         . .venv/bin/activate
-        uv pip install kivy pyserial pyjnius buildozer setuptools cython
+        uv sync
 
-    # Étape 7 : Compiler l'APK avec Buildozer
-    - name: Build APK with Buildozer
+    - name: Build APK and AAB with Buildozer
       run: |
         . .venv/bin/activate
         buildozer android debug
+        buildozer android release aab
 
-    # Étape 8 : Téléverser l'APK en tant qu'artefact
-    - name: Upload APK
+    - name: Upload APK and AAB
       uses: actions/upload-artifact@v4
       with:
-        name: android-apk
-        path: bin/*.apk
+        name: android-apk-aab
+        path: bin/*.{apk,aab}
