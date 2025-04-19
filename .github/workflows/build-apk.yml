@@ -1,0 +1,79 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Étape 1 : Cloner le dépôt
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Étape 2 : Configurer Java (nécessaire pour l'Android SDK)
+    - name: Set up JDK 24
+      uses: actions/setup-java@v4
+      with:
+        java-version: '24'
+        distribution: 'zulu'
+
+    # Étape 3 : Installer les dépendances système
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          build-essential \
+          libncurses5-dev \
+          libncursesw5-dev \
+          libreadline-dev \
+          libssl-dev \
+          zlib1g-dev \
+          libbz2-dev \
+          libsqlite3-dev \
+          python3-dev \
+          python3-pip \
+          libffi-dev \
+          git \
+          unzip
+
+    # Étape 4 : Télécharger et configurer l'Android SDK
+    - name: Set up Android SDK
+      run: |
+        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdline-tools.zip
+        unzip cmdline-tools.zip -d android-sdk
+        mkdir -p android-sdk/cmdline-tools
+        mv cmdline-tools android-sdk/cmdline-tools/latest
+        export ANDROID_SDK_ROOT=$(pwd)/android-sdk
+        echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+        yes | android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "build-tools;36.0.0" "platforms;android-34" "ndk;23.1.7779620" "platform-tools"
+
+    # Étape 5 : Installer uv
+    - name: Install uv
+      run: |
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+    # Étape 6 : Installer les dépendances Python avec uv
+    - name: Install Python dependencies
+      run: |
+        uv venv --python 3.12
+        . .venv/bin/activate
+        uv pip install kivy pyserial pyjnius buildozer setuptools cython
+
+    # Étape 7 : Compiler l'APK avec Buildozer
+    - name: Build APK with Buildozer
+      run: |
+        . .venv/bin/activate
+        buildozer android debug
+
+    # Étape 8 : Téléverser l'APK en tant qu'artefact
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: android-apk
+        path: bin/*.apk
