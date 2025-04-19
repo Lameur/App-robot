@@ -5,7 +5,16 @@ description = "Python app to control a Bluetooth robot"
 readme = "README.md"
 authors = [{ name = "Lameur", email = "96985489+Lameur@users.noreply.github.com" }]
 requires-python = ">=3.12,<3.13"
-dependencies = ["kivy>=2.3.1", "pyjnius>=1.6.1", "pyserial>=3.5"]
+dependencies = [
+    "buildozer>=1.5.0",
+    "cython>=3.0.12",
+    "kivy>=2.3.1",
+    "pip>=25.0.1",
+    "pyjnius>=1.6.1",
+    "pyserial>=3.5",
+    "python-for-android>=2024.1.21",
+    "setuptools>=78.1.0",
+]
 
 [project.scripts]
 app = "app:main"
