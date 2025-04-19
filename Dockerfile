@@ -1,5 +1,5 @@
 # Étape de construction
- FROM python:3.12-alpine AS builder
+ FROM azul/zulu-openjdk:24-latest AS builder
 
  # Installation de UV
  COPY --from=ghcr.io/astral-sh/uv /uv /bin/
@@ -9,13 +9,14 @@
 
  # Copie des fichiers de configuration
  COPY pyproject.toml .
+ COPY README.md .
+ COPY src/ .
 
  # Installation des dépendances avec UV
- RUN python -m venv .venv --copies
  RUN uv sync --no-editable --link-mode=copy --no-dev
 
  # Étape finale
- FROM python:3.12-alpine
+ FROM azul/zulu-openjdk
 
  WORKDIR /app
 
@@ -30,4 +31,4 @@
  COPY src/ .
 
  # Commande pour exécuter le bot avec UV
- CMD ["uv", "run", "app"]
+ CMD ["bash"]

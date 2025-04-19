@@ -15,6 +15,7 @@ gum = "latest"
 glow = "latest"
 skate = "latest"
 uv = "latest"
+java = "zulu-24"
 
 [task_config]
 includes = ["./.mise/tasks.toml"]
