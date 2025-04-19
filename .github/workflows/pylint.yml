@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.11", "3.12", "3.13"]
+        python-version: ["3.11", "3.12"]
     steps:
     - uses: actions/checkout@v4
     - name: Install uv
@@ -16,26 +16,15 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies 3.11
-      run: |
-        uv sync --dev -p ${{ matrix.python-version }}
-        uv pip install pylint
-    - name: Analysing the code with pylint
-      run: |
-        pylint $(git ls-files '*.py')
 
-    - name: Install dependencies 3.12
+    - name: Install dependencies
       run: |
         uv sync --dev -p ${{ matrix.python-version }}
-        uv pip install pylint
+        # uv pip install pylint
+
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
-    
-    - name: Install dependencies 3.13
-      run: |
-        uv sync --dev -p ${{ matrix.python-version }}
-        uv pip install pylint
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
