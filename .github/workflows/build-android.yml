@@ -55,9 +55,8 @@ jobs:
 
     - name: Install Python dependencies
       run: |
-        uv venv --python 3.12
-        . .venv/bin/activate
         uv sync
+        . .venv/bin/activate
 
     - name: Build APK and AAB with Buildozer
       run: |

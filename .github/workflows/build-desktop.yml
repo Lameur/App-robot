@@ -27,9 +27,8 @@ jobs:
 
     - name: Install Python dependencies
       run: |
-        uv venv
-        . .venv/Scripts/activate
         uv sync
+        . .venv/Scripts/activate
       shell: bash
 
     - name: Install Mesa3D for OpenGL support
@@ -87,9 +86,8 @@ jobs:
 
     - name: Build Linux executable
       run: |
-        uv venv
-        . .venv/bin/activate
         uv sync
+        . .venv/bin/activate
         pyinstaller --onefile --name RobotControl src/app/main.py
 
     - name: Upload Linux executable
