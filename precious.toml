@@ -18,13 +18,13 @@ cmd = ["ruff", "check"]
 include = ["**/*.py"]
 ok_exit_codes = 0
 
-[commands.flake8]
-type = "lint"
-cmd = ["flake8"]
-include = ["**/*.py"]
-lint_flags = "--doctests --count --statistics --format html --htmldir report/flake8"
-ok_exit_codes = 0
-expect_stderr = true
+# [commands.flake8]
+# type = "lint"
+# cmd = ["flake8"]
+# include = ["**/*.py"]
+# lint_flags = "--doctests --count --statistics --format html --htmldir report/flake8"
+# ok_exit_codes = 0
+# expect_stderr = true
 
 [commands.taplo]
 type = "both"
