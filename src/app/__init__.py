@@ -1,3 +1,4 @@
 from .main import RobotControlApp
 
-__all__ = ["RobotControlApp"]
+if __name__ == "__main__":
+    RobotControlApp().run()

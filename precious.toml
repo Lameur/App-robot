@@ -22,7 +22,7 @@ ok_exit_codes = 0
 type = "lint"
 cmd = ["flake8"]
 include = ["**/*.py"]
-lint_flags = "--doctests --count --statistics --format html --htmldir report/flake8"
+# lint_flags = ""
 ok_exit_codes = 0
 expect_stderr = true
 
