@@ -5,10 +5,6 @@ Module principal pour l'application de contrôle de robot via Bluetooth.
 import platform
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-from kivy.properties import BooleanProperty
 import serial
 
 # Gestion des permissions pour Android
@@ -16,22 +12,20 @@ try:
     from jnius import autoclass
     from android.permissions import request_permissions, Permission
 
-    Activity = autoclass("org.kivy.android.PythonActivity")
-    activity = Activity.mActivity
+    activity = autoclass("org.kivy.android.PythonActivity").mActivity
 
     # Android Bluetooth API
-    BluetoothAdapter = autoclass("android.bluetooth.BluetoothAdapter")
+    bluetooth_adapter = autoclass("android.bluetooth.BluetoothAdapter")
     BluetoothDevice = autoclass("android.bluetooth.BluetoothDevice")
     BluetoothSocket = autoclass("android.bluetooth.BluetoothSocket")
     UUID = autoclass("java.util.UUID")
 except ImportError:
     # Si on n'est pas sur Android, on ignore les permissions
-    def request_bluetooth_permissions(self):
+    def request_bluetooth_permissions():
         """Ignore les permissions si l'application n'est pas sur Android."""
-        pass
-    BluetoothAdapter = None
+        return
 else:
-    def request_bluetooth_permissions(self):
+    def request_bluetooth_permissions():
         """Demande les permissions Bluetooth pour Android 14."""
         permissions = [
             Permission.BLUETOOTH_CONNECT,
@@ -39,6 +33,7 @@ else:
             Permission.ACCESS_FINE_LOCATION,
         ]
         request_permissions(permissions)
+
 
 class RobotControlApp(App):
     """Application Kivy pour contrôler un robot via Bluetooth."""
@@ -48,17 +43,16 @@ class RobotControlApp(App):
         self.serial_port = None
         self.bt_socket = None  # For Android Bluetooth
         self.connected = False
-        self.device_input = None
-        self.status_label = None
+        self.root_widget = None  # To store the root widget
         self.is_android = platform.system() == "Linux" and "android" in platform.uname()
 
     request_bluetooth_permissions = request_bluetooth_permissions
 
     def connect_bluetooth(self, _):
         """Connexion au module Bluetooth HC-06."""
-        device_address = self.device_input.text.strip()
+        device_address = self.root_widget.ids.device_input.text.strip()
         if not device_address:
-            self.status_label.text = "Entrez une adresse Bluetooth valide !"
+            self.root_widget.ids.status_label.text = "Entrez une adresse Bluetooth valide !"
             return
 
         if self.is_android:
@@ -69,19 +63,21 @@ class RobotControlApp(App):
     def connect_android_bluetooth(self, device_address):
         """Connexion Bluetooth sur Android via pyjnius."""
         try:
-            adapter = BluetoothAdapter.getDefaultAdapter()
+            adapter = bluetooth_adapter.getDefaultAdapter()
             if not adapter.isEnabled():
-                self.status_label.text = "Activez le Bluetooth !"
+                self.root_widget.ids.status_label.text = "Activez le Bluetooth !"
                 return
 
             device = adapter.getRemoteDevice(device_address)
-            uuid = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")  # SPP UUID for HC-06
+            uuid = UUID.fromString(
+                "00001101-0000-1000-8000-00805F9B34FB"
+            )  # SPP UUID for HC-06
             self.bt_socket = device.createRfcommSocketToServiceRecord(uuid)
             self.bt_socket.connect()
             self.connected = True
-            self.status_label.text = f"Connecté à {device_address}"
-        except Exception as e:
-            self.status_label.text = f"Erreur de connexion : {str(e)}"
+            self.root_widget.ids.status_label.text = f"Connecté à {device_address}"
+        except java.lang.Exception as e:
+            self.root_widget.ids.status_label.text = f"Erreur de connexion : {str(e)}"
             self.connected = False
 
     def connect_serial_bluetooth(self, device_address):
@@ -92,15 +88,15 @@ class RobotControlApp(App):
         try:
             self.serial_port = serial.Serial(port=port, baudrate=9600, timeout=1)
             self.connected = True
-            self.status_label.text = f"Connecté à {device_address}"
+            self.root_widget.ids.status_label.text = f"Connecté à {device_address}"
         except serial.SerialException as error:
-            self.status_label.text = f"Erreur de connexion : {str(error)}"
+            self.root_widget.ids.status_label.text = f"Erreur de connexion : {str(error)}"
             self.connected = False
 
     def send_command(self, command):
         """Envoie une commande au robot via Bluetooth."""
         if not self.connected:
-            self.status_label.text = "Non connecté au robot !"
+            self.root_widget.ids.status_label.text = "Non connecté au robot !"
             return
 
         try:
@@ -110,13 +106,15 @@ class RobotControlApp(App):
                 output_stream.flush()
             elif self.serial_port:
                 self.serial_port.write(command.encode())
-            self.status_label.text = f"Commande envoyée : {command}"
-        except Exception as error:
-            self.status_label.text = f"Erreur d'envoi : {str(error)}"
+            self.root_widget.ids.status_label.text = f"Commande envoyée : {command}"
+        except (serial.SerialException, java.lang.Exception) as error:
+            self.root_widget.ids.status_label.text = f"Erreur d'envoi : {str(error)}"
 
     def build(self):
+        """Construit l'interface utilisateur."""
         self.request_bluetooth_permissions()
-        return BoxLayout()
+        self.root_widget = BoxLayout()
+        return self.root_widget
 
     def on_stop(self):
         """Ferme la connexion Bluetooth à la fermeture."""
@@ -124,6 +122,7 @@ class RobotControlApp(App):
             self.serial_port.close()
         if self.bt_socket:
             self.bt_socket.close()
+
 
 if __name__ == "__main__":
     RobotControlApp().run()
