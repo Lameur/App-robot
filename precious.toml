@@ -26,6 +26,14 @@ include = ["**/*.py"]
 ok_exit_codes = 0
 expect_stderr = true
 
+[commands.pylint]
+type = "lint"
+cmd = ["pylint"]
+include = ["**/*.py"]
+lint_flags = ["--recursive=y", "--enable=W"]
+ok_exit_codes = 0
+expect_stderr = true
+
 [commands.taplo]
 type = "both"
 include = "**/*.toml"

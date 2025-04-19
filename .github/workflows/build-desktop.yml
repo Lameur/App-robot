@@ -36,6 +36,15 @@ jobs:
         uv pip install kivy pyserial pyjnius pyinstaller
       shell: bash
 
+    - name: Install Mesa3D for OpenGL support
+      run: |
+        curl -L -o mesa-dist-win64.zip https://github.com/pal1000/mesa-dist-win/releases/download/23.1.7.0/mesa-dist-win64-23.1.7.0.zip
+        tar -xf mesa-dist-win64.zip -C mesa-dist-win64 --strip-components=1
+        setx MESA_GL_VERSION_OVERRIDE 2.0
+        setx MESA_GLSL_VERSION_OVERRIDE 110
+        setx PATH "%PATH%;%CD%\\mesa-dist-win64\\bin"
+
+
     # Étape 5 : Compiler l'exécutable Windows avec PyInstaller
     - name: Build Windows executable
       run: |
