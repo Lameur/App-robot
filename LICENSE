@@ -1,0 +1,95 @@
+# LibreShare Non-Commercial License (LSNC)
+
+**Version 1.0**
+
+**Copyright (c) 2025 - Lameur**
+
+## Plain Language Summary
+
+This license allows you to use, study, modify, and share our software for free, as long as you don’t use it to make money (commercial use is prohibited). You can use it in an educational context (school, university, training) if it remains non-commercial. You must share your modifications under this same license and include the source code. You cannot analyze or modify compiled versions of the software (e.g., executable files) without permission. We may change this license or stop sharing the software in the future, but your rights to versions you already have remain valid. For questions, contact us at [lameur.tech@gmail.com](mailto:lameur.tech@gmail.com).
+
+*This summary is not legally binding. Read the full license below for all details.*
+
+## Preamble
+
+The LibreShare Non-Commercial License ([LSNC v1.0](version/en/1.0.md)) governs the use, modification, and redistribution of the software to which it is attached. Designed for Lameur’s projects ([GitHub](https://github.com/Lameur)), it can be used by any person or entity in compliance with open-source principles and GitHub’s terms. It promotes the free sharing of source code while prohibiting commercial use and protecting compiled versions against reverse engineering, particularly to safeguard proprietary elements such as the non-open-source compiler of the Rights Holder. The Rights Holder may modify the license terms or cease public distribution for future versions. This license is governed by French law, as specified in Article 10.
+
+## Definitions
+
+- **Software**: The computer program, including its source code, distributed under this license.
+- **Rights Holder**: Lameur, or any individual or legal entity holding the copyright on the Software.
+- **User**: Any person or entity that uses, modifies, or redistributes the Software.
+- **Commercial Use**: Any use of the Software aimed at generating direct or indirect profit, including, but not limited to, sale, rental, or integration into a commercial product or service.
+- **Derivative Work**: Any modification, adaptation, or work based on the Software, including modified versions or software incorporating the Software.
+- **License Version**: A specific iteration of the LSNC, identified by a version number (e.g., 1.0).
+- **Compiled Form**: Any version of the Software distributed in executable or binary form, potentially incorporating proprietary elements such as the non-open-source compiler of the Rights Holder.
+
+## Article 1: Rights Granted
+
+Subject to the terms of this license, the Rights Holder grants the User a worldwide, non-exclusive, free, and irrevocable license for copies already distributed, to:
+
+1. Use the Software for non-commercial purposes.
+2. Study and access the Software’s source code.
+3. Modify the Software to create derivative works.
+4. Redistribute the Software and its derivative works under the terms of this license or a later version, in accordance with Article 5.
+
+*Note*: This license is irrevocable for copies of the Software legally obtained, but the Rights Holder may revoke the authorization to distribute new copies in case of violation of the terms.
+
+## Article 2: Copyleft
+
+1. Any derivative work based on the Software must be distributed under this [LSNC v1.0](version/en/1.0.md) License (or a later version, in accordance with Article 5), including the complete source code.
+2. The User may not impose additional restrictions on derivative works beyond those provided by this license.
+3. This obligation applies to any redistribution, whether public or private, of the Software or its derivative works.
+
+## Article 3: Prohibition of Reverse Engineering
+
+1. Reverse engineering, decompilation, disassembly, or any attempt to modify, analyze, or reconstruct the source code from the compiled form of the Software is strictly prohibited, except in cases expressly permitted by law (e.g., for interoperability under Article L122-6-1 of the French Intellectual Property Code).
+2. For any request related to interoperability or other legally permitted uses, contact the Rights Holder at [lameur.tech@gmail.com](mailto:lameur.tech@gmail.com).
+3. The study, modification, and use of the source code provided with the Software remain authorized under Article 1.
+
+## Article 4: Prohibition of Commercial Use
+
+1. The use of the Software for commercial purposes is prohibited, except with explicit written authorization from the Rights Holder.
+2. This restriction applies to the Software and all its derivative works.
+3. **Exception for Educational Use**: The use of the Software for non-commercial educational purposes (e.g., in schools, universities, or training programs) is expressly authorized, provided that such use remains limited to the educational sphere and does not involve commercial exploitation.
+4. To request authorization for commercial use or for educational use outside the non-commercial framework, contact the Rights Holder at [lameur.tech@gmail.com](mailto:lameur.tech@gmail.com).
+*Note*: Additional exceptions may be considered for non-profit organizations or specific projects, subject to a written agreement.
+
+## Article 5: Management of License Versions
+
+1. **License Modification**: The Rights Holder may modify the terms of this license for any new version of the Software distributed after the modification date.
+2. **Previous Versions**: Copies of the Software distributed under a previous version of the LSNC remain governed by that version for users who obtained those copies.
+3. **Upgrade to a Later Version**: The User may choose to redistribute the Software or its derivative works under a previous or later version of the LSNC, if available, unless a later version imposes additional restrictions.
+4. **Cessation of Distribution**: The Rights Holder may cease public distribution of the Software at any time, making future versions private. This does not affect the rights granted for copies already distributed.
+
+## Article 6: User Obligations
+
+1. Any redistribution of the Software or its derivative works must include a copy of this license (or the applicable version, in accordance with Article 5). **Alternatively, for scripts, small files, or other cases where including the full text is impractical, the User may include a direct link to the full license (e.g., on [github.com/Lameur/LSNC-License](https://github.com/Lameur/LSNC-License)), provided the link remains valid and accessible.**
+2. The User must retain all copyright notices, including "Copyright (c) 2025 - Lameur", and legal notices present in the Software.
+3. The User must clearly indicate any modifications made to the Software in derivative works.
+4. The User must specify the LSNC version used during redistribution (e.g., "[LSNC v1.0](version/en/1.0.md)").
+
+## Article 7: Compatibility with Other Licenses
+
+1. Any combination of the Software with other software under a different license requires the prior agreement of the Rights Holder.
+2. For any questions about compatibility with other open-source licenses (e.g., GPL, MIT), contact the Rights Holder at [lameur.tech@gmail.com](mailto:lameur.tech@gmail.com).
+
+## Article 8: Termination
+
+1. This license is automatically terminated if the User violates any of its terms, including the prohibition of commercial use, the copyleft obligation, or the prohibition of reverse engineering.
+2. Upon termination, the User must cease all use, modification, or redistribution of the Software.
+
+## Article 9: No Warranty
+
+1. The Software is provided "as is," without any warranty, express or implied, including, but not limited to, warranties of merchantability or fitness for a particular purpose.
+2. The Rights Holder shall not be liable for any damages arising from the use or inability to use the Software, within the limits permitted by applicable law.
+
+## Article 10: Applicable Law and Dispute Resolution
+
+1. This license is governed by French law.
+2. Any dispute related to this license shall be subject to the exclusive jurisdiction of French courts, unless an international arbitration is agreed upon by the parties.
+3. For international users, the Rights Holder may consider alternative dispute resolution mechanisms upon written request.
+
+## Article 11: Contact
+
+For any questions, requests for authorization (e.g., for commercial use or interoperability), or information about compatibility with other licenses, contact the Rights Holder at [lameur.tech@gmail.com](mailto:lameur.tech@gmail.com) or via [github.com/Lameur](https://github.com/Lameur). Once the official website is available, contact information will be updated.

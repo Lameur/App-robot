@@ -1,0 +1,41 @@
+#:schema https://github.com/jdx/mise/blob/main/schema/mise-task.json
+
+ [lint]
+ description = "Lint the code"
+ run = ['precious lint --all']
+ hide = false
+ alias = 'l'
+
+ [tidy]
+ description = "Tidy the code"
+ run = 'precious tidy --all'
+ hide = false
+ alias = 't'
+
+ ["Lint and tidy"]
+ description = "Lint and tidy the code"
+ depends = ['lint', 'tidy']
+ hide = false
+ alias = 'lt'
+
+ [dummy]
+ description = 'dummy commit'
+ run = ['git commit --allow-empty -m "Trigger Build"', 'git push']
+ hide = true
+ alias = 'gd'
+
+ [commit]
+ description = 'Commit change'
+ run = 'ruby scripts/commit.rb'
+ alias = 'gc'
+
+ [push]
+ description = 'Push change'
+ depends = 'commit'
+ run = 'git push'
+ alias = 'gp'
+
+[tasks.build]
+description = "Build the project with uv"
+run = "uv build --release"
+alias = "b"
